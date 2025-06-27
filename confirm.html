@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head><meta charset="UTF-8"><title>Підтвердження</title></head>
+<body>
+  <h2>Підтвердження візиту</h2>
+  <p id="info"></p>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("name");
+    const time = params.get("time");
+    document.getElementById("info").innerText = `Вас звати ${name}, ви записані на ${time}`;
+  </script>
+</body>
+</html>
