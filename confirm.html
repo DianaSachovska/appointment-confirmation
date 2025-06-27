@@ -1,14 +1,76 @@
 <!DOCTYPE html>
 <html lang="uk">
-<head><meta charset="UTF-8"><title>Підтвердження</title></head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Підтвердження візиту</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f5f5f5;
+      padding: 2em;
+      text-align: center;
+    }
+    .container {
+      background: white;
+      padding: 2em;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: auto;
+    }
+    h2 {
+      color: #1a237e;
+    }
+    button {
+      margin: 10px;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .confirm { background-color: #4CAF50; color: white; }
+    .cancel { background-color: #f44336; color: white; }
+    .reschedule { background-color: #ff9800; color: white; }
+  </style>
+</head>
 <body>
-  <h2>Підтвердження візиту</h2>
-  <p id="info"></p>
+  <div class="container">
+    <h2>Підтвердження візиту</h2>
+    <p>Ви записані до офтальмолога на:</p>
+    <p><strong id="time"></strong></p>
+
+    <p>Будь ласка, підтвердіть або скасуйте візит:</p>
+
+    <form id="response-form">
+      <input type="hidden" id="name" name="name">
+      <input type="hidden" id="visitTime" name="time">
+      <input type="hidden" id="status" name="status">
+
+      <button type="submit" class="confirm" onclick="setStatus('Підтверджено')">✅ Підтвердити</button>
+      <button type="submit" class="cancel" onclick="setStatus('Скасовано')">❌ Скасувати</button>
+      <button type="submit" class="reschedule" onclick="setStatus('Перенесення')">🔁 Перенести</button>
+    </form>
+  </div>
+
   <script>
     const params = new URLSearchParams(window.location.search);
-    const name = params.get("name");
-    const time = params.get("time");
-    document.getElementById("info").innerText = `Вас звати ${name}, ви записані на ${time}`;
+    const name = params.get("name") || "[Ім’я не вказано]";
+    const time = params.get("time") || "[Дата не вказана]";
+
+    document.getElementById("time").textContent = time;
+    document.getElementById("name").value = name;
+    document.getElementById("visitTime").value = time;
+
+    function setStatus(value) {
+      document.getElementById("status").value = value;
+    }
+
+    document.getElementById("response-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert("✅ Дякуємо! Вашу відповідь збережено (симуляція).\nІм'я: " + name + "\nЧас: " + time + "\nСтатус: " + document.getElementById("status").value);
+    });
   </script>
 </body>
 </html>
